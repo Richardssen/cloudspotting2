@@ -137,7 +137,7 @@ class TestInvitationsNotifications(TestCase):
         )
 
         url = reverse("account_signup")
-        self.post(url + f"?code={invitation.signup_code.code}", data=post_data)
+        self.post(f"{url}?code={invitation.signup_code.code}", data=post_data)
 
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn(inviter.email, mail.outbox[0].to)

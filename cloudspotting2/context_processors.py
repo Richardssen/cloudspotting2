@@ -24,10 +24,7 @@ def package_names(names):
     core_apps = ["pinax.templates", "account", "pinax.eventlog", "pinax.webanalytics"]
     apps = []
     for x in names:
-        if x in core_apps:
-            index = core_apps.index(x)
-        else:
-            index = 55
+        index = core_apps.index(x) if x in core_apps else 55
         # add to decorated list
         apps.append((index, transform_package_name(x)))
 
@@ -51,9 +48,7 @@ def settings(request):
 
     if Site._meta.installed:
         site = Site.objects.get_current(request)
-        ctx.update({
-            "SITE_NAME": site.name,
-            "SITE_DOMAIN": site.domain
-        })
+        ctx |= {"SITE_NAME": site.name, "SITE_DOMAIN": site.domain}
+
 
     return ctx
